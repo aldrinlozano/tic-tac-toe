@@ -1,14 +1,27 @@
 import * as React from 'react';
+import { useState, useEffect } from 'react';
 import { Square } from '../square';
 
 export const Board: React.FC = () => {
     function renderSquare(i: number): React.ReactElement {
       return (
-        <Square number={i}/>
+        <Square value={squares[i]} onClick={() => handleClick(i)}/>
       );
+    }
+
+    function handleClick(i: number): void {
+        let currentSquares = squares.slice();
+        currentSquares[i] = 'X';
+        setSquares(currentSquares);
     }
   
     const status = 'Next player: X';
+    const [ squares, setSquares ] = useState<any[]>([]);
+
+    // is this the right way?
+    useEffect(() => {
+        setSquares(new Array(9).fill(null));
+    }, []);
 
     return (
     <div>
